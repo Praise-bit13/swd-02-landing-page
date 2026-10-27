@@ -6,7 +6,25 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.addEventListener('click', () => {
       const willExpand = menuToggle.getAttribute('aria-expanded') !== 'true';
       menuToggle.setAttribute('aria-expanded', String(willExpand));
+      menuToggle.setAttribute('aria-label', willExpand ? 'Close navigation' : 'Open navigation');
       nav.classList.toggle('open', willExpand);
+    });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a')) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation');
+        nav.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.classList.contains('open')) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation');
+        nav.classList.remove('open');
+        menuToggle.focus();
+      }
     });
   }
 
@@ -52,6 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     updateBilling(isYearly);
   }
+
+  document.querySelectorAll('[data-plan]').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (planSelect instanceof HTMLSelectElement) {
+        planSelect.value = link.dataset.plan;
+      }
+    });
+  });
 
   document.querySelectorAll('.question').forEach((button) => {
     button.addEventListener('click', () => {
