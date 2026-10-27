@@ -38,7 +38,7 @@ const initMobileMenu = () => {
   });
 
   navigation.addEventListener('click', (event) => {
-    if (event.target instanceof Element && event.target.closest('a')) {
+    if (event.target instanceof Element && event.target.closest('a, .theme-toggle')) {
       closeMobileMenu(menuButton, navigation);
     }
   });
@@ -280,6 +280,103 @@ const initFooterYear = () => {
 };
 
 /**
+ * Applies a theme to the page and synchronizes the theme switch's accessible state.
+ *
+ * @param {boolean} isDark - Whether dark mode should be active.
+ * @param {HTMLButtonElement} themeToggle - The theme switch button.
+ * @returns {void}
+ */
+const setTheme = (isDark, themeToggle) => {
+  const icon = themeToggle.querySelector('.theme-toggle__icon');
+  const label = themeToggle.querySelector('.theme-toggle__label');
+
+  document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+  themeToggle.setAttribute('aria-checked', String(isDark));
+  themeToggle.setAttribute(
+    'aria-label',
+    isDark ? 'Switch to light mode' : 'Switch to dark mode',
+  );
+
+  if (icon) {
+    icon.textContent = isDark ? '☀' : '☾';
+  }
+  if (label) {
+    label.textContent = isDark ? 'Light mode' : 'Dark mode';
+  }
+};
+
+/**
+ * Initializes the persistent dark-mode switch.
+ *
+ * @returns {void}
+ */
+const initThemeToggle = () => {
+  const themeToggle = document.getElementById('theme-toggle');
+
+  if (!(themeToggle instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  let isDark = false;
+
+  try {
+    isDark = window.localStorage.getItem('launchdesk-theme') === 'dark';
+  } catch (error) {
+    console.warn('Could not read the saved theme preference.', error);
+  }
+
+  setTheme(isDark, themeToggle);
+
+  themeToggle.addEventListener('click', () => {
+    isDark = themeToggle.getAttribute('aria-checked') !== 'true';
+    setTheme(isDark, themeToggle);
+
+    try {
+      window.localStorage.setItem('launchdesk-theme', isDark ? 'dark' : 'light');
+    } catch (error) {
+      console.warn('Could not save the theme preference in this browser.', error);
+    }
+  });
+};
+
+/**
+ * Reveals each main section as it enters the viewport.
+ *
+ * @returns {void}
+ */
+const initSectionReveal = () => {
+  const sections = document.querySelectorAll('main > section');
+
+  if (
+    !sections.length ||
+    !('IntersectionObserver' in window) ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, sectionObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('section--visible');
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.12,
+    },
+  );
+
+  sections.forEach((section) => {
+    section.classList.add('section--reveal');
+    observer.observe(section);
+  });
+};
+
+/**
  * Validates the signup fields, prevents duplicate emails, and stores valid signups.
  * localStorage is used for this frontend demonstration only; it is not a secure
  * production signup database.
@@ -482,6 +579,8 @@ const init = () => {
   initPricingToggle();
   initHeaderShadow();
   initFooterYear();
+  initThemeToggle();
+  initSectionReveal();
   initSignupForm();
 };
 
