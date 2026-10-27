@@ -1374,6 +1374,18 @@ footer .logo {
   color: #fff;
   font-size: 0.82rem;
   font-weight: 700;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.social a:hover {
+  transform: translateY(-2px);
+  border-color: rgb(255 255 255 / 28%);
+  background: rgb(255 255 255 / 12%);
+}
+
+.social__link svg {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .footer__bottom,
