@@ -234,6 +234,10 @@ svg {
   backdrop-filter: blur(16px);
 }
 
+.header.header--scrolled {
+  box-shadow: var(--shadow-md);
+}
+
 .header__inner,
 .nav-wrap {
   position: relative;
@@ -1104,10 +1108,17 @@ figcaption small {
 }
 
 .answer {
+  overflow: hidden;
+  height: 0;
   padding: 0 0 var(--space-4);
   color: var(--muted);
   font-size: 0.9rem;
   line-height: 1.7;
+  transition: height 240ms ease;
+}
+
+.answer[hidden] {
+  display: none;
 }
 
 .answer p {
@@ -1564,5 +1575,9 @@ footer .logo {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .answer {
+    transition-duration: 0.01ms !important;
   }
 }
