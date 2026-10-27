@@ -383,27 +383,64 @@
           <form id="signup-form" novalidate>
             <h3>Create your workspace</h3>
             <p>A few details to get you started.</p>
-            <label for="full-name">Full name</label>
-            <input id="full-name" name="fullName" type="text" autocomplete="name" placeholder="e.g. Alex Morgan" required />
+            <div class="form-field">
+              <label for="full-name">Full name</label>
+              <input
+                id="full-name"
+                name="fullName"
+                type="text"
+                autocomplete="name"
+                placeholder="e.g. Alex Morgan"
+                aria-describedby="full-name-error"
+                aria-invalid="false"
+                required
+              />
+              <p id="full-name-error" class="field-error" aria-live="polite" aria-atomic="true"></p>
+            </div>
 
-            <label for="email">Work email</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="alex@company.com" required />
+            <div class="form-field">
+              <label for="email">Work email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="alex@company.com"
+                aria-describedby="email-error"
+                aria-invalid="false"
+                required
+              />
+              <p id="email-error" class="field-error" aria-live="polite" aria-atomic="true"></p>
+            </div>
 
-            <label for="plan">Choose a plan</label>
-            <select id="plan" name="plan" required>
-              <option value="Basic" data-monthly="Basic — $12 / user / month" data-yearly="Basic — $10 / user / month">Basic — $12 / user / month</option>
-              <option value="Pro" data-monthly="Pro — $24 / user / month" data-yearly="Pro — $19 / user / month" selected>Pro — $24 / user / month</option>
-              <option value="Business" data-monthly="Business — $39 / user / month" data-yearly="Business — $31 / user / month">Business — $39 / user / month</option>
-            </select>
+            <div class="form-field">
+              <label for="plan">Choose a plan</label>
+              <select id="plan" name="plan" aria-describedby="plan-error" aria-invalid="false" required>
+                <option value="Basic" data-monthly="Basic — $12 / user / month" data-yearly="Basic — $10 / user / month">Basic — $12 / user / month</option>
+                <option value="Pro" data-monthly="Pro — $24 / user / month" data-yearly="Pro — $19 / user / month" selected>Pro — $24 / user / month</option>
+                <option value="Business" data-monthly="Business — $39 / user / month" data-yearly="Business — $31 / user / month">Business — $39 / user / month</option>
+              </select>
+              <p id="plan-error" class="field-error" aria-live="polite" aria-atomic="true"></p>
+            </div>
 
-            <label class="terms">
-              <input id="terms" name="terms" type="checkbox" required />
-              <span>I agree to the <a href="#footer">terms of service</a> and privacy policy.</span>
-            </label>
+            <div class="terms-field">
+              <label class="terms">
+                <input
+                  id="terms"
+                  name="terms"
+                  type="checkbox"
+                  aria-describedby="terms-error"
+                  aria-invalid="false"
+                  required
+                />
+                <span>I agree to the <a href="#footer">terms of service</a> and privacy policy.</span>
+              </label>
+              <p id="terms-error" class="field-error" aria-live="polite" aria-atomic="true"></p>
+            </div>
 
             <button class="btn btn--primary primary submit" type="submit">Get started for free →</button>
             <p id="form-message" role="status" aria-live="polite"></p>
-            <small class="fineprint">Demo form only. Your details won't be sent to a server.</small>
+            <small class="fineprint">Demo form only. Your details stay in this browser and won't be sent to a server.</small>
           </form>
         </div>
       </section>

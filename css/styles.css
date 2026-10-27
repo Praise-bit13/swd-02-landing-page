@@ -1199,16 +1199,34 @@ figcaption small {
   font-weight: 650;
 }
 
+.signup-panel .form-field {
+  margin-bottom: var(--space-4);
+}
+
+.signup-panel .form-field label {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
 .signup-panel input:not([type="checkbox"]),
 .signup-panel select {
   width: 100%;
   min-height: 3rem;
-  margin-bottom: var(--space-4);
+  margin-bottom: 0;
   padding: 0.75rem 0.85rem;
   border: 1px solid rgb(255 255 255 / 22%);
   border-radius: var(--radius-sm);
   background: rgb(255 255 255 / 8%);
   color: #fff;
+}
+
+.signup-panel input:not([type="checkbox"]):focus-visible,
+.signup-panel select:focus-visible {
+  outline-color: #c1bdff;
+}
+
+.signup-panel [aria-invalid="true"] {
+  border-color: #ffb0b0 !important;
 }
 
 .signup-panel input:not([type="checkbox"])::placeholder {
@@ -1224,10 +1242,29 @@ figcaption small {
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  margin: 0 0 var(--space-4);
+  margin: 0;
   color: rgb(255 255 255 / 84%);
   font-size: 0.8rem;
   font-weight: 500;
+}
+
+.terms-field {
+  margin-bottom: var(--space-4);
+}
+
+.field-error {
+  margin: var(--space-2) 0 0;
+  color: #ffc2c2;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.terms-field .field-error {
+  padding-left: 1.75rem;
 }
 
 .terms input {
@@ -1257,6 +1294,10 @@ figcaption small {
 
 #form-message.success {
   color: #a7f0cc;
+}
+
+#form-message.error {
+  color: #ffc2c2;
 }
 
 .signup-panel .fineprint {
